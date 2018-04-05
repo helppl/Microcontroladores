@@ -1,0 +1,33 @@
+Quais as diferenças entre os barramentos de dados e de endereços?
+R: O barramento de dados tem a unica função de transmitir dados entre as unidades, em geral o numero de bits que são transmitidos é o mesmo numero de bits que o processador trabalha. 
+Por outro lado, o barramento de endereço tem como objetivo ''guiar'' os dados entre as diferentes unidades, por esse motivo pode extrapolar o numero de bits do processador.
+
+Quais são as diferenças entre as memórias RAM e ROM?
+R: RAM geralmente são memorias de uso rapido, ou seja, possuem alta velocidade porém são memorias volateis, portanto, ao desligar o sistemas os dados são perdidos.
+Por outro lado, as memorias ROM são memorias mais lentas e não volateis geralmente são usadas para gravas informações que serão preservadas no sistema. 
+
+Considere o código abaixo:
+
+#include <stdio.h>
+int main(void)
+{
+	int i;
+	printf("Insira um número inteiro: ");
+	scanf("%d", &i);
+	if(i%2)
+		printf("%d eh impar.\n");
+	else
+		printf("%d eh par.\n");
+	return 0;
+}
+Para este código, responda: (a) A variável i é armazenada na memória RAM ou ROM? Por quê? (b) O programa compilado a partir deste código é armazenado na memória RAM ou ROM? Por quê?
+R: Como a variavel é um tipo que irá sempre variar de acordo com situações, será armazenada na memoria RAM, pois é um tipo de dado que sempre irá mudar. Já o programa será copilado e salvo em uma memoria ROM, pois se o sistema for desligado não será perdido o conjunto de instruções do codigo.
+
+Quais são as diferenças, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
+R: A primeria é uma arquitetura com maior poder de processamento que utiliza barramento entre as memorias ROMS e RAMS. Já o segundo é uma arquitetura mais simples sem barramentos entre as memorias, ou seja, em algumas situações mais eficiente ,no que diz respeito, a velocidade de acesso entre as memorias. 
+
+Considere a variável inteira i, armazenando o valor 0x8051ABCD. Se i é armazenada na memória a partir do endereço 0x0200, como ficam este byte e os seguintes, considerando que a memória é: (a) Little-endian; (b) Big-endian.
+R:a) No littler endia o resultado vai ser 0xAB
+b) big Endia vai retornar 0x51
+
+Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas variáveis de 32 bits?
