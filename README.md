@@ -1,3 +1,3 @@
 # MICROPROCESSADORES E MICROCONTROLADORES
 
-Aluno: João Vitor Rodrigues Baptista - 15/0013329
+João Vitor Rodrigues Baptista - 15/0013329
