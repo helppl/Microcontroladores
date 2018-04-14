@@ -1,18 +1,18 @@
-Quais as diferenÁas entre os barramentos de dados e de endereÁos?
-R: O barramento de dados tem a unica funÁ„o de transmitir dados entre as unidades, em geral o numero de bits que s„o transmitidos È o mesmo numero de bits que o processador trabalha. 
-Por outro lado, o barramento de endereÁo tem como objetivo ''guiar'' os dados entre as diferentes unidades, por esse motivo pode extrapolar o numero de bits do processador.
+Quais as diferen√ßas entre os barramentos de dados e de endere√ßos?
+R: O barramento de dados tem a unica fun√ß√£o de transmitir dados entre as unidades, em geral o numero de bits que s√£o transmitidos √© o mesmo numero de bits que o processador trabalha. 
+Por outro lado, o barramento de endere√ßo tem como objetivo ''guiar'' os dados entre as diferentes unidades, por esse motivo pode extrapolar o numero de bits do processador.
 
-Quais s„o as diferenÁas entre as memÛrias RAM e ROM?
-R: RAM geralmente s„o memorias de uso rapido, ou seja, possuem alta velocidade porÈm s„o memorias volateis, portanto, ao desligar o sistemas os dados s„o perdidos.
-Por outro lado, as memorias ROM s„o memorias mais lentas e n„o volateis geralmente s„o usadas para gravas informaÁıes que ser„o preservadas no sistema. 
+Quais s√£o as diferen√ßas entre as mem√≥rias RAM e ROM?
+R: RAM geralmente s√£o memorias de uso rapido, ou seja, possuem alta velocidade por√©m s√£o memorias volateis, portanto, ao desligar o sistemas os dados s√£o perdidos.
+Por outro lado, as memorias ROM s√£o memorias mais lentas e n√£o volateis geralmente s√£o usadas para gravas informa√ß√µes que ser√£o preservadas no sistema. 
 
-Considere o cÛdigo abaixo:
+Considere o c√≥digo abaixo:
 
 #include <stdio.h>
 int main(void)
 {
 	int i;
-	printf("Insira um n˙mero inteiro: ");
+	printf("Insira um n√∫mero inteiro: ");
 	scanf("%d", &i);
 	if(i%2)
 		printf("%d eh impar.\n");
@@ -20,14 +20,26 @@ int main(void)
 		printf("%d eh par.\n");
 	return 0;
 }
-Para este cÛdigo, responda: (a) A vari·vel i È armazenada na memÛria RAM ou ROM? Por quÍ? (b) O programa compilado a partir deste cÛdigo È armazenado na memÛria RAM ou ROM? Por quÍ?
-R: Como a variavel È um tipo que ir· sempre variar de acordo com situaÁıes, ser· armazenada na memoria RAM, pois È um tipo de dado que sempre ir· mudar. J· o programa ser· copilado e salvo em uma memoria ROM, pois se o sistema for desligado n„o ser· perdido o conjunto de instruÁıes do codigo.
+Para este c√≥digo, responda: (a) A vari√°vel i √© armazenada na mem√≥ria RAM ou ROM? Por qu√™? (b) O programa compilado a partir deste c√≥digo √© armazenado na mem√≥ria RAM ou ROM? Por qu√™?
+R: Como a variavel √© um tipo que ir√° sempre variar de acordo com situa√ß√µes, ser√° armazenada na memoria RAM, pois √© um tipo de dado que sempre ir√° mudar. J√° o programa ser√° copilado e salvo em uma memoria ROM, pois se o sistema for desligado n√£o ser√° perdido o conjunto de instru√ß√µes do codigo.
 
-Quais s„o as diferenÁas, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
-R: A primeria È uma arquitetura com maior poder de processamento que utiliza barramento entre as memorias ROMS e RAMS. J· o segundo È uma arquitetura mais simples sem barramentos entre as memorias, ou seja, em algumas situaÁıes mais eficiente ,no que diz respeito, a velocidade de acesso entre as memorias. 
+Quais s√£o as diferen√ßas, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
+R: A primeria √© uma arquitetura com maior poder de processamento que utiliza barramento entre as memorias ROMS e RAMS. J√° o segundo √© uma arquitetura mais simples sem barramentos entre as memorias, ou seja, em algumas situa√ß√µes mais eficiente ,no que diz respeito, a velocidade de acesso entre as memorias. 
 
-Considere a vari·vel inteira i, armazenando o valor 0x8051ABCD. Se i È armazenada na memÛria a partir do endereÁo 0x0200, como ficam este byte e os seguintes, considerando que a memÛria È: (a) Little-endian; (b) Big-endian.
+Considere a vari√°vel inteira i, armazenando o valor 0x8051ABCD. Se i √© armazenada na mem√≥ria a partir do endere√ßo 0x0200, como ficam este byte e os seguintes, considerando que a mem√≥ria √©: (a) Little-endian; (b) Big-endian.
 R:a) No littler endia o resultado vai ser 0xAB
 b) big Endia vai retornar 0x51
 
-Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas vari·veis de 32 bits?
+	(a) Little-endian?
+	R: 	0x200: 0xCD
+		0x202: 0xAB
+		0x204: 0x51
+		0x206: 0x80 
+	(b) Big-endian?
+	R: 	0x200: 0x80
+		0x202: 0x51
+		0x204: 0xAB
+		0x206: 0xCD 
+
+Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas vari√°veis de 32 bits?
+R: Verificando a flag de Overflow da pr√≥pria CPU ou fazendo an√°lise de sinal com a flag de negativo.
