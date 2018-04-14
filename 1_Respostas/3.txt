@@ -1,6 +1,4 @@
-Data: 22/03/2017
-
-1. Dada uma variável 'a' do tipo 'char' (um byte), escreva os trechos de código em C para:
+1. Dada uma variÃ¡vel 'a' do tipo 'char' (um byte), escreva os trechos de cÃ³digo em C para:
 	(a) Somente setar o bit menos significativo de 'a'.
 		a | = 0x01
 	(b) Somente setar dois bits de 'a': o menos significativo e o segundo menos significativo.
@@ -15,7 +13,7 @@ Data: 22/03/2017
 		a ^ = 0xF0
 		a | = 0x0F
 
-2. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar os dois LEDs ininterruptamente.
+2. Considerando a placa Launchpad do MSP430, escreva o cÃ³digo em C para piscar os dois LEDs ininterruptamente.
 	# Incluem  < msp430g2553.h >
 	# Define  LED1 BIT0
 	# Define  LED2 BIT6
@@ -31,7 +29,7 @@ Data: 22/03/2017
 			P1OUT & = ~ (LED1 + LED2);
 		}
 	};
-3. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar duas vezes os dois LEDs sempre que o usuário pressionar o botão.
+3. Considerando a placa Launchpad do MSP430, escreva o cÃ³digo em C para piscar duas vezes os dois LEDs sempre que o usuÃ¡rio pressionar o botÃ£o.
 # Incluem  < msp430g2553.h >
 	# Define  BTN BIT2
 	# Define  LED1 BIT0
@@ -44,7 +42,7 @@ Data: 22/03/2017
 		P1OUT = 0 ;
 		Para (;;)
 		{
-			se (P1IN & BTN == 0 ) // Botão pressionado
+			se (P1IN & BTN == 0 ) // BotÃ£o pressionado
 			{
 				P1OUT | = LED1 + LED2;
 				P1OUT & = ~ (LED1 + LED2); // 1 vez
@@ -52,13 +50,13 @@ Data: 22/03/2017
 				P1OUT | = LED1 + LED2;
 				P1OUT & = ~ (LED1 + LED2); // 2 vezes
 				
-				Enquanto (P1IN & BTN == 0 ) {} // Aguardar o botão para ser pressionado para continuar.
+				Enquanto (P1IN & BTN == 0 ) {} // Aguardar o botÃ£o para ser pressionado para continuar.
 			}
 			outro
 				P1OUT & = ~ (LED1 + LED2); // Apagar os leds
 		}
 	};
-4. Considerando a placa Launchpad do MSP430, faça uma função em C que pisca os dois LEDs uma vez.
+4. Considerando a placa Launchpad do MSP430, faÃ§a uma funÃ§Ã£o em C que pisca os dois LEDs uma vez.
 anular  Pisca2 ()
 	{
 		P1OUT | = LED1 + LED2;
@@ -67,7 +65,7 @@ anular  Pisca2 ()
 		P1OUT | = LED1 + LED2;
 		P1OUT & = ~ (LED1 + LED2); // 2 vezes
 	}
-5. Reescreva o código da questão 2 usando a função da questão 4.
+5. Reescreva o cÃ³digo da questÃ£o 2 usando a funÃ§Ã£o da questÃ£o 4.
 # Incluem  < msp430g2553.h >
 	# Define  LED1 BIT0
 	# Define  LED2 BIT6
@@ -92,7 +90,7 @@ anular  Pisca2 ()
 		}
 	};
 
-6. Reescreva o código da questão 3 usando a função da questão 4.
+6. Reescreva o cÃ³digo da questÃ£o 3 usando a funÃ§Ã£o da questÃ£o 4.
 # Incluem  < msp430g2553.h >
 	# Define  BTN BIT2
 	# Define  LED1 BIT0
@@ -114,11 +112,11 @@ anular  Pisca2 ()
 		P1OUT = 0 ;
 		Para (;;)
 		{
-			se (P1IN & BTN == 0 ) // Botão pressionado
+			se (P1IN & BTN == 0 ) // BotÃ£o pressionado
 			{
 				Pisca2 ();
 				
-				Enquanto (P1IN & BTN == 0 ) {} // Aguardar o botão para ser pressionado para continuar.
+				Enquanto (P1IN & BTN == 0 ) {} // Aguardar o botÃ£o para ser pressionado para continuar.
 			}
 			outro
 				P1OUT & = ~ (LED1 + LED2); // Apagar os leds
