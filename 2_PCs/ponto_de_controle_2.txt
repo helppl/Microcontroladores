@@ -1,5 +1,0 @@
-https://www.filipeflop.com/blog/acendendo-uma-lampada-com-sensor-de-presenca/
-
-https://www.filipeflop.com/blog/controle-acesso-leitor-rfid-arduino/
-
-https://www.arduinoportugal.pt/uso-do-sensor-movimiento-hc-sr501-arduino/
