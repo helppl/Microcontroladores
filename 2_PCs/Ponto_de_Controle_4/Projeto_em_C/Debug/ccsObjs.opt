@@ -1,0 +1,1 @@
+"./BasicsFuncs.obj" "./Rc522.obj" "./Serial_SPI.obj" "./Serial_UART.obj" "./main.obj" "../lnk_msp430g2553.cmd" -llibc.a 
