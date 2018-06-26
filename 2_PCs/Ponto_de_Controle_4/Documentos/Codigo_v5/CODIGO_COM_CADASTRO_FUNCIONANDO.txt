@@ -1,0 +1,697 @@
+#include <msp430g2533.h>
+#include <Serial_UART.h>
+#include <Serial_SPI.h>
+#include <Rc522.h>
+#include <string.h>
+
+#define LED1 BIT0
+#define CS BIT0
+#define NRSTDP BIT3
+Rc522 rc522(CS, NRSTDP);
+unsigned char serNum[5];
+
+unsigned char reg[10];
+unsigned char reg1[10];
+unsigned char reg2[10];
+unsigned char reg3[10];
+unsigned char reg4[10];
+int ENTRADA1 = 0;
+int ENTRADA2 = 0;
+//char recv[9] = {0};
+char nome_cliente[16];
+
+// ABRIR O RELÊ
+ void Abrir_Porta(){
+     while(1){
+     digitalWriteA(1, LED1, HIGH); //Abrir o rele
+     break;
+     }
+ }
+
+// FECHAR O RELÊ
+ void Fechar_Porta(){
+     while(1){
+     digitalWriteA(1, LED1, LOW); //Ativar o relê
+     break;
+     }
+    }
+
+
+ /* ********************************************************************************
+     *              Função para o modo de comando abrir e fechar pelo pc         ! *
+     ********************************************************************************** */
+void comandos_pc() {
+
+  int i = 1;
+  int inByte = 0;
+  while (i) {
+    if(Serial_UART.available() != 0) {
+        Serial_UART.readInt();
+        Serial_UART.print(inByte);
+        Serial_UART.print("\n");
+            if (inByte == 65 ) { // A ou a ou 1
+                    Serial_UART.print("ABERTO\n");
+                    Abrir_Porta();
+                    delayms(1000);
+            }
+            else if (inByte == 70 ) { //F ou f 70 102
+                    Serial_UART.print("FECHADO\n");
+                    Fechar_Porta();
+                    delayms(1000);
+            }
+            else if (inByte == 83 ) { //S ou f 83 115
+                    Serial_UART.print("VOLTAR PARA MODO DE LEITURA\n");
+                    inByte = 0;
+                    i = 0;
+                    delayms(1000);
+            }
+            else {
+                    Serial_UART.print("COMANDO NÃO CASTRADO\n");
+                    delayms(2000);
+            }
+    }
+    else {
+
+        Serial_UART.print("\nEscolha A para abrir, F para fechar ou S para voltar Modo de leitura\n");
+
+        delayms(2000);
+   }
+  }
+}
+
+
+ /* ********************************************************************************
+     *  Funções para transmissão serial dos dados para serem salvos numa pasta   ! *
+     ********************************************************************************** */
+
+ void Entrada_Serial()
+     {
+     while(1){
+     Serial_UART.print("BEM VINDO,  "); // printar a msg de acesso
+     Serial_UART.print(nome_cliente); // printar na parte de baixo do display
+     Serial_UART.print("\r\n");
+     break;
+     }
+ }
+
+
+ void Saida_Serial(){
+     while(1){
+      Serial_UART.print("VOLTE SEMPRE, "); // printar a msg de acesso
+      Serial_UART.print(nome_cliente); // printar na parte de baixo do display
+      Serial_UART.print("\r\n");
+      break;
+     }
+
+
+ }
+
+ void Tente_Serial(){
+     while(1){
+     Serial_UART.print("ACESSO NEGADO..."); // printar a msg de acesso
+     Serial_UART.print("TENTE NOVAMENTE\n"); // printar na parte de baixo do display
+     Serial_UART.print("\r\n");
+     break;
+     }
+
+}
+
+ void Tela_Espera(){
+      while(1){
+      Serial_UART.print("PASSE O CARTAO");
+      Serial_UART.print("\r\n");
+      break;
+      }
+
+ }
+
+//FUNÇÃO GERARAL PARA PRINTAR
+int Func_Printar(volatile int ENTRADA){
+    //ENTRADA GENERICA
+
+    if(ENTRADA == 0){
+          Abrir_Porta();
+          delayms(2000);
+          Fechar_Porta();
+          Entrada_Serial();
+          ENTRADA = 1;
+         }
+
+     else if (ENTRADA == 1){
+            Abrir_Porta();
+            delayms(2000);
+            Fechar_Porta();
+            Saida_Serial();
+            ENTRADA = 0;
+
+          }
+
+      else if (ENTRADA == 2) {
+          Tente_Serial();
+
+           }
+      else {
+          Serial_UART.print("ERROR 3");
+           }
+
+    return (ENTRADA);
+
+ }
+
+//FUNÇÃO PRINCIPAL
+
+
+int main()
+{
+    WDTCTL = WDTPW + WDTHOLD; // Stop WDT
+
+
+    Serial_UART.init(9600);
+    Serial_UART.print("RFID LOADING");
+    Serial_UART.print("\r\n");
+    Serial_SPI.init();
+    digitalWriteA(1, CS, LOW);
+    pinModeA(1, LED1, OUTPUT);
+    digitalWriteA(1, LED1, LOW);
+    rc522.Init();
+    int a = 0;
+    int i = 0;
+
+
+  while (1){
+        unsigned char status;
+        unsigned char str[MAX_LEN];
+        
+        delayms(2000);
+        //Serial_UART.print("DIGITE 1 PARA COMANDO PC, 2 MODO CADASTRO OU DEIXA ROLAR O MODO LEITOR...\n");
+        if(Serial_UART.available() != 0){
+           Serial_UART.readInt();
+           Serial_UART.print(a);
+              if(a == 49){ //CHAMA MODO DE COMANDO NO PC
+                      Serial_UART.print("MODO DE COMANDO PELO PC\n");
+                      comandos_pc();
+                  }
+              else if(a == 50){ //CHAMA MODO DE CADASTRO
+                              
+                          Serial_UART.print("MODO DE CADASTRO\n");
+                          delayms(2000);
+                          int j = 1;
+
+                         #include <msp430g2533.h>
+#include <Serial_UART.h>
+#include <Serial_SPI.h>
+#include <Rc522.h>
+#include <string.h>
+
+#define LED1 BIT0
+#define CS BIT0
+#define NRSTDP BIT3
+Rc522 rc522(CS, NRSTDP);
+unsigned char serNum[5];
+unsigned char reg[10];
+unsigned char reg1[10];
+unsigned char reg2[10];
+unsigned char reg3[10];
+unsigned char reg4[10];
+int i = 0;
+int ENTRADA[10] = {0};
+int ENTRADA2 = 0;
+//char recv[9] = {0};
+char nome_cliente[16];
+
+// ABRIR O RELÊ
+ void Abrir_Porta(){
+     while(1){
+     digitalWriteA(1, LED1, HIGH); //Abrir o rele
+     break;
+     }
+ }
+
+// FECHAR O RELÊ
+ void Fechar_Porta(){
+     while(1){
+     digitalWriteA(1, LED1, LOW); //Ativar o relê
+     break;
+     }
+    }
+
+
+ /* ********************************************************************************
+     *              Função para o modo de comando abrir e fechar pelo pc         ! *
+     ********************************************************************************** */
+void comandos_pc() {
+
+  int i = 1;
+  int inByte = 0;
+  while (i) {
+    if(Serial_UART.available() != 0) {
+        Serial_UART.readInt();
+        Serial_UART.print(inByte);
+        Serial_UART.print("\n");
+            if (inByte == 65 ) { // A ou a ou 1
+                    Serial_UART.print("ABERTO\n");
+                    Abrir_Porta();
+                    delayms(1000);
+            }
+            else if (inByte == 70 ) { //F ou f 70 102
+                    Serial_UART.print("FECHADO\n");
+                    Fechar_Porta();
+                    delayms(1000);
+            }
+            else if (inByte == 83 ) { //S ou f 83 115
+                    Serial_UART.print("VOLTAR PARA MODO DE LEITURA\n");
+                    inByte = 0;
+                    i = 0;
+                    delayms(1000);
+            }
+            else {
+                    Serial_UART.print("COMANDO NÃO CASTRADO\n");
+                    delayms(2000);
+            }
+    }
+    else {
+
+        Serial_UART.print("\nEscolha A para abrir, F para fechar ou S para voltar Modo de leitura\n");
+
+        delayms(2000);
+   }
+  }
+}
+
+
+ /* ********************************************************************************
+     *  Funções para transmissão serial dos dados para serem salvos numa pasta   ! *
+     ********************************************************************************** */
+
+ void Entrada_Serial(volatile int contador)
+     {
+     while(1){
+     Serial_UART.print("BEM VINDO, CADASTRO: "); // printar a msg de acesso
+     Serial_UART.print(contador); // printar na parte de baixo do display
+     Serial_UART.print("\r\n");
+     break;
+     }
+ }
+
+
+ void Saida_Serial(volatile int contador){
+     while(1){
+      Serial_UART.print("VOLTE SEMPRE, CADASTRO: "); // printar a msg de acesso
+      Serial_UART.print(contador); // printar na parte de baixo do display
+      Serial_UART.print("\r\n");
+      break;
+     }
+
+
+ }
+
+ void Tente_Serial(){
+     while(1){
+     Serial_UART.print("ACESSO NEGADO..."); // printar a msg de acesso
+     Serial_UART.print("TENTE NOVAMENTE\n"); // printar na parte de baixo do display
+     Serial_UART.print("\r\n");
+     break;
+     }
+
+}
+
+ void Tela_Espera(){
+      while(1){
+      Serial_UART.print("PASSE O CARTAO");
+      Serial_UART.print("\r\n");
+      break;
+      }
+
+ }
+
+//FUNÇÃO GERARAL PARA PRINTAR
+int Func_Printar(volatile int ENTRADA, volatile int contador){
+    //ENTRADA GENERICA
+
+    if(ENTRADA == 0){
+          Abrir_Porta();
+          delayms(2000);
+          Fechar_Porta();
+          Entrada_Serial(contador);
+          ENTRADA = 1;
+         }
+
+     else if (ENTRADA == 1){
+            Abrir_Porta();
+            delayms(2000);
+            Fechar_Porta();
+            Saida_Serial(contador);
+            ENTRADA = 0;
+
+          }
+
+      else if (ENTRADA == 2) {
+          Tente_Serial();
+
+           }
+      else {
+          Serial_UART.print("ERROR 3");
+           }
+
+    return (ENTRADA);
+
+ }
+
+//FUNÇÃO PRINCIPAL
+int main()
+{
+    WDTCTL = WDTPW + WDTHOLD; // Stop WDT
+
+
+    Serial_UART.init(9600);
+    Serial_UART.print("RFID LOADING");
+    Serial_UART.print("\r\n");
+    Serial_SPI.init();
+    digitalWriteA(1, CS, LOW);
+    pinModeA(1, LED1, OUTPUT);
+    digitalWriteA(1, LED1, LOW);
+    rc522.Init();
+    int a = 0;
+
+
+
+  while (1){
+        unsigned char status;
+        unsigned char str[MAX_LEN];
+
+        delayms(2000);
+        //Serial_UART.print("DIGITE 1 PARA COMANDO PC, 2 MODO CADASTRO OU DEIXA ROLAR O MODO LEITOR...\n");
+        if(Serial_UART.available() != 0){
+           Serial_UART.readInt();
+           Serial_UART.print(a);
+              if(a == 49){ //CHAMA MODO DE COMANDO NO PC
+                      Serial_UART.print("MODO DE COMANDO PELO PC\n");
+                      comandos_pc();
+                  }
+               else if(a == 50)
+               { //CHAMA MODO DE CADASTRO
+
+                  Serial_UART.print("\nMODO DE CADASTRO\n");
+                  delayms(2000);
+                  int j = 1;
+
+                  while(j)
+                 {
+                 delayms(2000);
+                 Serial_UART.print("PASSE O CARTÃO QUE VAI SER CADASTRADO\n");
+
+                 status = rc522.Request(PICC_REQIDL, str);
+                 if (status == MI_OK)
+                 {
+                  Serial_UART.print("Dedectando RFID...\n");
+                 delayms(1000);
+
+                 status = rc522.Anticoll(str);
+                 memcpy(serNum, str, 5);
+                 if (status == MI_OK)
+                 {
+
+                 Serial_UART.print("ID: ");
+                 Serial_UART.print(serNum[0]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(serNum[1]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(serNum[2]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(serNum[3]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(serNum[4]);
+                 Serial_UART.print(".");
+                 reg[i] = serNum[0];
+                 reg1[i] = serNum[1];
+                 reg2[i] = serNum[2];
+                 reg3[i] = serNum[3];
+                 reg4[i] = serNum[4];
+                 Serial_UART.print("\nDADOS SALVO NO REGISTRADOR: ");
+                 Serial_UART.print(i);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(reg[i]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(reg1[i]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(reg2[i]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(reg3[i]);
+                 Serial_UART.print(" , ");
+                 Serial_UART.print(reg4[i]);
+                 Serial_UART.print(".");
+                 Serial_UART.print("\nSALVO COM SUCESSO!!!");
+                 i++;
+                 j = 0;
+                 }
+                 break;
+                    }
+                 }
+             }
+                  else{
+                  Serial_UART.print("COMANDO NÃO ENCONTRADO\n");
+                  }
+           }
+        else{}
+
+
+
+
+        status = rc522.Request(PICC_REQIDL, str);
+        if (status == MI_OK)  // Cartão detectado
+        {
+            Serial_UART.print("\nRFID detectado: ");
+            Serial_UART.print(str[0]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(str[1]);
+            Serial_UART.print("\r\n");
+        }
+
+        status = rc522.Anticoll(str);
+        memcopy(serNum, str, 5);
+        if (status == MI_OK)
+        {
+
+            Serial_UART.print("ID: ");
+            Serial_UART.print(serNum[0]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[1]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[2]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[3]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[4]);
+            Serial_UART.print("\r\n");
+
+         /*   if(serNum[0] == 0xBB && serNum[1] == 0x01 && serNum[2] == 0xB5 && serNum[3] == 0xA9 && serNum[4] == 0xA6) //SR.FELICIO
+               {
+                 strcpy(nome_cliente, "SR. FELICIO");
+                  ENTRADA1 = Func_Printar(ENTRADA1);
+                  }
+               else if (serNum[0] == 253 && serNum[1] == 125 && serNum[2] == 181 && serNum[3] == 21 && serNum[4] == 32) //SR. BAPISTA
+                  {
+                  strcpy(nome_cliente, "SR. BAPTISTA");
+                  ENTRADA2 = Func_Printar(ENTRADA2);
+
+                  }
+               else
+                  {
+                  Func_Printar(2);
+
+                  }*/
+            int SinalR  = 0;
+            int contador; //variável de controle do loop
+            for(contador = 0; contador < 10; contador++){
+                if (serNum[0] == reg[contador] && serNum[1] == reg1[contador] && serNum[2] == reg2[contador] && serNum[3] == reg3[contador] && serNum[4] == reg4[contador])
+                   {
+                  //Serial_UART.print("CADASTRADO: ");
+                  //Serial_UART.print(contador);
+                 ENTRADA[contador] = Func_Printar(ENTRADA[contador], contador);
+                  SinalR = 1;
+                   }
+                  }
+
+                if(SinalR == 0){
+                  Serial_UART.print("TENTE NOVAMENTE\n");
+                  }
+      }
+
+}
+     rc522.Halt();
+}
+
+
+
+#pragma vector=USCIAB0TX_VECTOR
+__interrupt void USCI0TX_ISR(void)
+{
+
+
+    if (UC0IFG & UCA0TXIFG)
+    {
+        //Pega os valores passados nos parâmetros da função
+        byte* buf = Serial_UART.TxBuffer;
+        volatile int* i = &Serial_UART.iTx;
+        volatile byte* lock = &Serial_UART.lockTX;
+
+        (*i)++;
+
+        if (*i < Serial_UART.lenghtTX)
+            UCA0TXBUF = buf[*i];
+
+
+        else    //Coloca o valor para ser enviado no BUF do TX
+        {
+            while (UCA0STAT & UCBUSY);
+            UC0IE &= ~UCA0TXIE;
+
+            *lock = 0;
+
+        }
+    }
+}
+
+#pragma vector=USCIAB0RX_VECTOR
+__interrupt void USCI0RX_ISR(void)
+{
+    if (UC0IFG & UCA0RXIFG)
+    {
+
+        //Pega os valores passados nos parâmetros da função
+        byte* buf = Serial_UART.RxBuffer;
+        volatile int* i = &Serial_UART.iRx;
+        volatile byte* lock = &Serial_UART.lockRX;
+        (*i)++;
+
+        unsigned char rx = UCA0RXBUF;
+        if(rx == '\0' || *i > Serial_UART.lenghtRX)
+        {
+            while (UCA0STAT & UCBUSY);
+            UC0IE &= ~UCA0RXIE;
+            *lock = 0;
+        }
+
+        else//(*i < Serial_UART.lenghtTX && buf[*(i - 1)] != '\0')
+            buf[*i] = rx;
+    }
+}
+
+
+
+                        }
+
+                  else{
+                  Serial_UART.print("COMANDO NÃO ENCONTRADO\n");
+                  }
+           }
+
+
+
+        else {
+
+        status = rc522.Request(PICC_REQIDL, str);
+        if (status == MI_OK)  // Cartão detectado
+        {
+            Serial_UART.print("RFID detectado: ");
+            Serial_UART.print(str[0]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(str[1]);
+            Serial_UART.print("\r\n");
+        }
+
+        status = rc522.Anticoll(str);
+        memcopy(serNum, str, 5);
+        if (status == MI_OK)
+        {
+
+            Serial_UART.print("ID: ");
+            Serial_UART.print(serNum[0]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[1]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[2]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[3]);
+            Serial_UART.print(" , ");
+            Serial_UART.print(serNum[4]);
+            Serial_UART.print("\r\n");
+
+            if(serNum[0] == 0xBB && serNum[1] == 0x01 && serNum[2] == 0xB5 && serNum[3] == 0xA9 && serNum[4] == 0xA6) //SR.FELICIO
+               {
+                 strcpy(nome_cliente, "SR. FELICIO");
+                  ENTRADA1 = Func_Printar(ENTRADA1);
+                  }
+               else if (serNum[0] == 253 && serNum[1] == 125 && serNum[2] == 181 && serNum[3] == 21 && serNum[4] == 32) //SR. BAPISTA
+                  {
+                  strcpy(nome_cliente, "SR. BAPTISTA");
+                  ENTRADA2 = Func_Printar(ENTRADA2);
+
+                  }
+               else
+                  {
+                  Func_Printar(2);
+                  }
+      }
+    }
+}
+     rc522.Halt();
+}
+
+
+
+#pragma vector=USCIAB0TX_VECTOR
+__interrupt void USCI0TX_ISR(void)
+{
+
+
+    if (UC0IFG & UCA0TXIFG)
+    {
+        //Pega os valores passados nos parâmetros da função
+        byte* buf = Serial_UART.TxBuffer;
+        volatile int* i = &Serial_UART.iTx;
+        volatile byte* lock = &Serial_UART.lockTX;
+
+        (*i)++;
+
+        if (*i < Serial_UART.lenghtTX)
+            UCA0TXBUF = buf[*i];
+
+
+        else    //Coloca o valor para ser enviado no BUF do TX
+        {
+            while (UCA0STAT & UCBUSY);
+            UC0IE &= ~UCA0TXIE;
+
+            *lock = 0;
+
+        }
+    }
+}
+
+#pragma vector=USCIAB0RX_VECTOR
+__interrupt void USCI0RX_ISR(void)
+{
+    if (UC0IFG & UCA0RXIFG)
+    {
+
+        //Pega os valores passados nos parâmetros da função
+        byte* buf = Serial_UART.RxBuffer;
+        volatile int* i = &Serial_UART.iRx;
+        volatile byte* lock = &Serial_UART.lockRX;
+        (*i)++;
+
+        unsigned char rx = UCA0RXBUF;
+        if(rx == '\0' || *i > Serial_UART.lenghtRX)
+        {
+            while (UCA0STAT & UCBUSY);
+            UC0IE &= ~UCA0RXIE;
+            *lock = 0;
+        }
+
+        else//(*i < Serial_UART.lenghtTX && buf[*(i - 1)] != '\0')
+            buf[*i] = rx;
+    }
+}
+
+
