@@ -1,5 +1,0 @@
-http://blog.usinainfo.com.br/leitor-biometrico-arduino-sistema-de-cadastramento-e-leitura-de-digitais/
-
-https://e2e.ti.com/support/wireless_connectivity/nfc_rfid/f/667/t/92664
-
-https://cdn-learn.adafruit.com/downloads/pdf/adafruit-optical-fingerprint-sensor.pdf
